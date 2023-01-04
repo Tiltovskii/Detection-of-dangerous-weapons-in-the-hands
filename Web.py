@@ -60,7 +60,7 @@ def print_image(img, boxes, conf, labels):
             font = ImageFont.load_default()
             draw.text((boxes[indx][0] + 5, boxes[indx][1] - 2 * fort_size - 5),
                       f"Label: {translate[label]}\nConf: {conf[indx]:.2f}",
-                      font=ImageFont.truetype('dlig', size=fort_size),
+                      font=ImageFont.truetype('lat1', size=fort_size),
                       fill='white')
 
     st.image(img)
