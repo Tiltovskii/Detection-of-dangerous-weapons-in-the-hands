@@ -36,7 +36,7 @@ def load_model():
                            model_name='fasterrcnn_resnet50_fpn')
 
     except:
-        f_checkpoint = Path("weights/model_weights3.pth")
+        f_checkpoint = "weights/model_weights3.pth"
         url = 'https://drive.google.com/file/d/1vgtAVo-Vat82bG4vax5flIyaiHglbMdR'
 
         with st.spinner("Downloading model... this may take awhile! \n Don't stop it!"):
