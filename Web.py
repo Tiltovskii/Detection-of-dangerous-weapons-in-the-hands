@@ -52,9 +52,15 @@ def print_image(img, boxes, conf, labels):
     for indx, label in enumerate(labels):
         draw = ImageDraw.Draw(img)
         draw.rectangle([boxes[indx][0], boxes[indx][1], boxes[indx][2], boxes[indx][3]], outline='red', width=3)
-        draw.text((boxes[indx][0] + 5, boxes[indx][1] - 2*fort_size - 5), f"Label: {translate[label]}\nConf: {conf[indx]:.2f}",
-                  font=ImageFont.truetype('arial.ttf', size=fort_size),
-                  fill='white')
+        try:
+            draw.text((boxes[indx][0] + 5, boxes[indx][1] - 2*fort_size - 5), f"Label: {translate[label]}\nConf: {conf[indx]:.2f}",
+                      font=ImageFont.truetype('Ubuntu-R.ttf', size=fort_size),
+                      fill='white')
+        except:
+            draw.text((boxes[indx][0] + 5, boxes[indx][1] - 2 * fort_size - 5),
+                      f"Label: {translate[label]}\nConf: {conf[indx]:.2f}",
+                      font=ImageFont.truetype('arial.ttf', size=fort_size),
+                      fill='white')
 
     st.image(img)
 
