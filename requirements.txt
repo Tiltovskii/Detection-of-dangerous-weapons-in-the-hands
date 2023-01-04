@@ -6,3 +6,9 @@ Pillow==9.4.0
 streamlit==1.9.0
 torch==1.13.1
 tqdm==4.64.0
+mock
+opencv-python
+pandas
+pytest
+sphinx
+torchvision==0.10.0
