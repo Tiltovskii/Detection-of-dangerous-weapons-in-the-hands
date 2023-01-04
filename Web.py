@@ -4,7 +4,7 @@ from Model import NewModel
 from PIL import Image
 from PIL import ImageDraw, ImageFont
 import torch
-from Configure import translate
+from Configure import translate, url
 import gdown
 
 
@@ -35,7 +35,6 @@ def load_model():
                            model_name='fasterrcnn_resnet50_fpn')
 
     except:
-        url = "https://drive.google.com/drive/folders/11EQMBTiQr1eqCFR-tuYCcpjcBJK4BUKF"
         with st.spinner("Downloading model... this may take awhile! \n Don't stop it!"):
             gdown.download_folder(url, quiet=True, use_cookies=False)
 
@@ -65,12 +64,22 @@ def print_image(img, boxes, conf, labels):
 
 
 def print_image_with_max_conf(img, boxes, conf, labels):
+    width, height = img.size
+    fort_size = height // 50
     indx = torch.argmax(conf)
     draw = ImageDraw.Draw(img)
     draw.rectangle([boxes[indx][0], boxes[indx][1], boxes[indx][2], boxes[indx][3]], outline='red', width=3)
-    draw.text((boxes[indx][0] + 5, boxes[indx][1] - 27), f"Label: {translate[labels[indx]]}\nConf: {conf[indx]:.2f}",
-              font=ImageFont.truetype("arial"),
-              fill='white')
+    try:
+        draw.text((boxes[indx][0] + 5, boxes[indx][1] - 2 * fort_size - 5),
+                  f"Label: {translate[labels[indx]]}\nConf: {conf[indx]:.2f}",
+                  font=ImageFont.truetype('arial.ttf', size=fort_size),
+                  fill='white')
+    except:
+        draw.text((boxes[indx][0] + 5, boxes[indx][1] - 2 * fort_size - 5),
+                  f"Label: {translate[labels[indx]]}\nConf: {conf[indx]:.2f}",
+                  font=ImageFont.truetype('DejaVuSansMono', size=fort_size),
+                  fill='white')
+        
     st.image(img)
 
 
