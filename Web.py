@@ -30,19 +30,17 @@ def load_model():
     # fasterrcnn_mobilenet_v3_large_fpn
     model = NewModel(['pistol', 'knife', 'billete', 'monedero', 'smartphone', 'tarjeta'],
                      model_name='fasterrcnn_resnet50_fpn')
-
     try:
-        model = model.load('weights/model_weights3.pth', ['pistol', 'knife', 'billete', 'monedero', 'smartphone', 'tarjeta'],
+        model = model.load('weights/model_weights3.pth',
+                           ['pistol', 'knife', 'billete', 'monedero', 'smartphone', 'tarjeta'],
                            model_name='fasterrcnn_resnet50_fpn')
 
     except:
-        f_checkpoint = "weights/model_weights3.pth"
-        url = 'https://drive.google.com/file/d/1vgtAVo-Vat82bG4vax5flIyaiHglbMdR'
-
+        url = "https://drive.google.com/drive/folders/11EQMBTiQr1eqCFR-tuYCcpjcBJK4BUKF"
         with st.spinner("Downloading model... this may take awhile! \n Don't stop it!"):
-            gdown.download(url, f_checkpoint, quiet=False)
+            gdown.download_folder(url, quiet=True, use_cookies=False)
 
-        model = model.load('weights/model_weights3.pth',
+        model = model.load('Model/model_weights3.pth',
                            ['pistol', 'knife', 'billete', 'monedero', 'smartphone', 'tarjeta'],
                            model_name='fasterrcnn_resnet50_fpn')
     return model
