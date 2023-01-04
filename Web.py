@@ -58,6 +58,7 @@ def print_image(img, boxes, conf, labels):
                       fill='white')
         except:
             font = ImageFont.load_default()
+            st.write(font)
             draw.text((boxes[indx][0] + 5, boxes[indx][1] - 2 * fort_size - 5),
                       f"Label: {translate[label]}\nConf: {conf[indx]:.2f}",
                       font=ImageFont.truetype('latin-1', size=fort_size),
