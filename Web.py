@@ -4,7 +4,6 @@ from Model import NewModel
 from PIL import Image
 from PIL import ImageDraw, ImageFont
 import torch
-from pathlib import Path
 from Configure import translate
 import gdown
 
@@ -60,7 +59,7 @@ def print_image(img, boxes, conf, labels):
             font = ImageFont.load_default()
             draw.text((boxes[indx][0] + 5, boxes[indx][1] - 2 * fort_size - 5),
                       f"Label: {translate[label]}\nConf: {conf[indx]:.2f}",
-                      font=ImageFont.truetype('sans serif', size=fort_size),
+                      font=ImageFont.truetype('DejaVuSansMono', size=fort_size),
                       fill='white')
 
     st.image(img)
