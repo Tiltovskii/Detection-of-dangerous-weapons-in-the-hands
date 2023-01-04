@@ -1,0 +1,8 @@
+detecto==1.2.2
+ipython==8.8.0
+matplotlib==3.5.1
+numpy==1.22.3
+Pillow==9.4.0
+streamlit==1.9.0
+torch==1.13.1
+tqdm==4.64.0
