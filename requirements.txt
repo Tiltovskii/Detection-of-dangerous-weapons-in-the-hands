@@ -5,6 +5,8 @@ numpy==1.22.3
 Pillow==9.4.0
 streamlit==1.9.0
 tqdm==4.64.0
+gdown
+requests
 mock
 opencv-python
 pandas
