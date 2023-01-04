@@ -4,7 +4,9 @@ from Model import NewModel
 from PIL import Image
 from PIL import ImageDraw, ImageFont
 import torch
+from pathlib import Path
 from Configure import translate
+import gdown
 
 
 def load_image():
@@ -28,8 +30,21 @@ def load_model():
     # fasterrcnn_mobilenet_v3_large_fpn
     model = NewModel(['pistol', 'knife', 'billete', 'monedero', 'smartphone', 'tarjeta'],
                      model_name='fasterrcnn_resnet50_fpn')
-    model = model.load('weights/model_weights3.pth', ['pistol', 'knife', 'billete', 'monedero', 'smartphone', 'tarjeta'],
-                       model_name='fasterrcnn_resnet50_fpn')
+
+    try:
+        model = model.load('weights/model_weights3.pth', ['pistol', 'knife', 'billete', 'monedero', 'smartphone', 'tarjeta'],
+                           model_name='fasterrcnn_resnet50_fpn')
+
+    except:
+        f_checkpoint = Path("weights/model_weights3.pth")
+        url = 'https://drive.google.com/file/d/1vgtAVo-Vat82bG4vax5flIyaiHglbMdR'
+
+        with st.spinner("Downloading model... this may take awhile! \n Don't stop it!"):
+            gdown.download(url, f_checkpoint, quiet=False)
+
+        model = model.load('weights/model_weights3.pth',
+                           ['pistol', 'knife', 'billete', 'monedero', 'smartphone', 'tarjeta'],
+                           model_name='fasterrcnn_resnet50_fpn')
     return model
 
 
