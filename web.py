@@ -1,6 +1,6 @@
 import io
 import streamlit as st
-from Model import NewModel
+from model import NewModel
 from PIL import Image
 from PIL import ImageDraw, ImageFont
 import torch
