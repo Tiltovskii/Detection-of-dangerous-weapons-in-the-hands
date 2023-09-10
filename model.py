@@ -7,7 +7,6 @@ from detecto.core import DataLoader, Model
 
 
 class NewModel(Model):
-
     DEFAULT = 'fasterrcnn_resnet50_fpn'
     MOBILENET = 'fasterrcnn_mobilenet_v3_large_fpn'
     MOBILENET_320 = 'fasterrcnn_mobilenet_v3_large_320_fpn'
