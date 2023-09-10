@@ -26,21 +26,7 @@ def load_image():
 
 @st.cache(allow_output_mutation=True)
 def load_model():
-    # fasterrcnn_mobilenet_v3_large_fpn
-    model = NewModel(['pistol', 'knife', 'billete', 'monedero', 'smartphone', 'tarjeta'],
-                     model_name='fasterrcnn_resnet50_fpn')
-    try:
-        model = model.load('weights/model_weights3.pth',
-                           ['pistol', 'knife', 'billete', 'monedero', 'smartphone', 'tarjeta'],
-                           model_name='fasterrcnn_resnet50_fpn')
-
-    except:
-        with st.spinner("Downloading model... this may take awhile! \n Don't stop it!"):
-            gdown.download_folder(url, quiet=True, use_cookies=False)
-
-        model = model.load('Model/model_weights3.pth',
-                           ['pistol', 'knife', 'billete', 'monedero', 'smartphone', 'tarjeta'],
-                           model_name='fasterrcnn_resnet50_fpn')
+    model = torch.load('weights/model.pth')
     return model
 
 
@@ -51,7 +37,8 @@ def print_image(img, boxes, conf, labels):
         draw = ImageDraw.Draw(img)
         draw.rectangle([boxes[indx][0], boxes[indx][1], boxes[indx][2], boxes[indx][3]], outline='red', width=3)
         try:
-            draw.text((boxes[indx][0] + 5, boxes[indx][1] - 2*fort_size - 5), f"Label: {translate[label]}\nConf: {conf[indx]:.2f}",
+            draw.text((boxes[indx][0] + 5, boxes[indx][1] - 2 * fort_size - 5),
+                      f"Label: {translate[label]}\nConf: {conf[indx]:.2f}",
                       font=ImageFont.truetype('arial.ttf', size=fort_size),
                       fill='white')
         except:
@@ -79,11 +66,12 @@ def print_image_with_max_conf(img, boxes, conf, labels):
                   f"Label: {translate[labels[indx]]}\nConf: {conf[indx]:.2f}",
                   font=ImageFont.truetype('DejaVuSansMono', size=fort_size),
                   fill='white')
-        
+
     st.image(img)
 
 
 model = load_model()
+
 # Выводим заголовок страницы средствами Streamlit
 st.title('Детекция предметов в руках на изображении')
 # Вызываем функцию создания формы загрузки изображения
