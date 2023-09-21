@@ -1,11 +1,10 @@
 import io
 import streamlit as st
-from model import NewModel
 from PIL import Image
 from PIL import ImageDraw, ImageFont
 import torch
-from Configure import translate, url
-import gdown
+from config import translate, CLASSES
+import requests
 
 
 def load_image():
@@ -19,15 +18,9 @@ def load_image():
         # Показ загруженного изображения на Web-странице средствами Streamlit
         st.image(image_data)
         # Возврат изображения в формате PIL
-        return Image.open(io.BytesIO(image_data))
+        return Image.open(io.BytesIO(image_data)), image_data
     else:
-        return None
-
-
-@st.cache(allow_output_mutation=True)
-def load_model():
-    model = torch.load('weights/model.pth')
-    return model
+        return None, None
 
 
 def print_image(img, boxes, conf, labels):
@@ -70,15 +63,23 @@ def print_image_with_max_conf(img, boxes, conf, labels):
     st.image(img)
 
 
-model = load_model()
+def predict(img_data):
+    response = requests.post(url='http://localhost:8000/predict',
+                             files={'file': img_data,
+                                    'type ': 'image/jpeg'},
+                             headers={
+                                 'accept': 'application/json'}
+                             )
+    results = response.json()
+    return results['boxes'], [CLASSES[label-1] for label in results['labels']], results['scores']
+
 
 # Выводим заголовок страницы средствами Streamlit
 st.title('Детекция предметов в руках на изображении')
 # Вызываем функцию создания формы загрузки изображения
-img = load_image()
-
+img, byte_img = load_image()
 result = st.button('Распознать изображение')
 # Если кнопка нажата, то запускаем распознавание изображения
 if result and img:
-    labels, boxes, conf = model.predict_top(img)
+    boxes, labels, conf = predict(byte_img)
     print_image(img, boxes, conf, labels)

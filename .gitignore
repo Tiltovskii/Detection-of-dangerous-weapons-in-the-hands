@@ -1,3 +1,7 @@
 venv
 create_model.py
 .idea
+data
+artifacts
+mlflow.db
+mlruns
