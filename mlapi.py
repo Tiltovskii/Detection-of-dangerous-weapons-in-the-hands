@@ -8,7 +8,7 @@ from config import *
 
 mlflow.set_tracking_uri("http://localhost:5000")
 classes = ['__background__'] + CLASSES
-model_name = "Kek"
+model_name = "Detection"
 model_version = "1"
 model = mlflow.pytorch.load_model(model_uri=f"models:/{model_name}/{model_version}")
 

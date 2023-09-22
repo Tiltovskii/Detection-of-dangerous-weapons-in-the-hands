@@ -73,9 +73,8 @@ class NewModel(Model):
                     total_loss.backward()
                     # Update model parameters from gradients: param -= learning_rate * param.grad
                     optimizer.step()
-                    break
 
-                self._model.eval()
+
                 avg_train_loss = np.mean(batch_train_loss)
                 train_losses += [avg_train_loss]
                 # Validation step
@@ -93,11 +92,11 @@ class NewModel(Model):
                             loss_dict = self._model(images, targets)
                             total_loss = sum(loss for loss in loss_dict.values())
                             avg_val_loss += total_loss.item()
-                            break
 
                     avg_val_loss /= len(val_dataset.dataset)
                     val_losses += [avg_val_loss]
 
+                self._model.eval()
                 mlflow.log_metric(key=f"Average-train-loss", value=float(avg_train_loss), step=epoch)
                 if val_dataset is not None:
                     mlflow.log_metric(key=f"Average-val-loss", value=float(avg_val_loss), step=epoch)

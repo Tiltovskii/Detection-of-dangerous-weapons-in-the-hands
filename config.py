@@ -54,7 +54,7 @@ PARAMS = {'LEARNING_RATE': 5e-3,
           'GAMMA': 0.1,
           'WEIGHT_DECAY': 5e-4,
           'MOMENTUM': 0.9,
-          'EPOCH': 2}
+          'EPOCH': 10}
 
 translate = {'knife': 'Knife',
              'smartphone': 'Smartphone',
