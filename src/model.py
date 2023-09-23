@@ -74,7 +74,6 @@ class NewModel(Model):
                     # Update model parameters from gradients: param -= learning_rate * param.grad
                     optimizer.step()
 
-
                 avg_train_loss = np.mean(batch_train_loss)
                 train_losses += [avg_train_loss]
                 # Validation step

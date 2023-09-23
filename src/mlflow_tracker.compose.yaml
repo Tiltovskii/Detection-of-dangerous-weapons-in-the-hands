@@ -1,0 +1,20 @@
+services:
+  mlflow_tracker:
+    build:
+      context: .
+      dockerfile: mlflow_tracker.Dockerfile
+    image: mlflow_tracker
+    container_name: mlflow_tracker
+    ports:
+      - 5000:5000
+    volumes:
+      - ~\.volumes\mlflow\artifacts:/Users/bende/.volumes/mlflow/artifacts
+      - ~\.volumes\mlflow\db:/app
+
+    networks:
+      - mlflow_network
+
+
+networks:
+  mlflow_network:
+    driver: bridge

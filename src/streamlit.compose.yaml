@@ -1,0 +1,32 @@
+services:
+  api_ml:
+    build:
+      context: .
+      dockerfile: api.Dockerfile
+    image: api_ml
+    container_name: api_ml
+    volumes:
+      - ~\.volumes\mlflow\artifacts:/Users/bende/.volumes/mlflow/artifacts
+    ports:
+      - 8000:8000
+    networks:
+      - api_model_network
+      - mlflow_network
+
+  server:
+    build:
+      context: .
+      dockerfile: streamlit.Dockerfile
+    image: streamlit
+    container_name: streamlit
+    ports:
+      - 80:8501
+    networks:
+      - api_model_network
+
+networks:
+  api_model_network:
+    driver: bridge
+  mlflow_network:
+    name: src_mlflow_network
+    external: true

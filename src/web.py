@@ -64,7 +64,7 @@ def print_image_with_max_conf(img, boxes, conf, labels):
 
 
 def predict(img_data):
-    response = requests.post(url='http://localhost:8000/predict',
+    response = requests.post(url='http://api_ml:8000/predict',
                              files={'file': img_data,
                                     'type ': 'image/jpeg'},
                              headers={

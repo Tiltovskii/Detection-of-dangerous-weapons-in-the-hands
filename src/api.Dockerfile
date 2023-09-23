@@ -1,9 +1,3 @@
-# syntax=docker/dockerfile:1
-
-# Comments are provided throughout this file to help you get started.
-# If you need more help, visit the Dockerfile reference guide at
-# https://docs.docker.com/engine/reference/builder/
-
 ARG PYTHON_VERSION=3.10.4
 FROM python:${PYTHON_VERSION}-slim as base
 
@@ -44,9 +38,6 @@ USER appuser
 # Copy the source code into the container.
 COPY . .
 
-EXPOSE 8501
+EXPOSE 8000
 
-HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
-
-ENTRYPOINT ["streamlit", "run", "Web.py", "--server.port=8501", "--server.address=0.0.0.0"]
-
+CMD ["uvicorn", "mlapi:app", "--host", "0.0.0.0", "--port", "8000"]

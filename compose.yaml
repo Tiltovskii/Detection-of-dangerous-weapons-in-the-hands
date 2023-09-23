@@ -1,6 +1,0 @@
-services:
-  server:
-    build:
-      context: .
-    ports:
-      - 80:8501

@@ -3,7 +3,10 @@
 #
 # For more help, visit the .dockerignore file reference guide at
 # https://docs.docker.com/engine/reference/builder/#dockerignore-file
-
+venv
+mlruns
+artifacts
+photos
 data
 **/.DS_Store
 **/__pycache__
