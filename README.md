@@ -8,19 +8,22 @@ Detection of dangerous weapons in the hands using detecto and streamlit
 В качестве основного фремйворка для работы с моделью была выбрана библиотека `Detecto`, которая была написана при помощи `PyTorch`, из-за чего если мне не понравится какой-то класс или функция, то я смог бы спокойно их переписать, что я и делал.
 
 В репозитории есть `train.ipynb` файл, который является основным, так как именно в нем была написана модель, датасет, функция измерения метрики MaP, обучена модель и выведены результаты.
+Но всё в основном было перенесено в `.py` файлы, так что при запуске `train.py` будет выполнено такое же обучение, но с трекингом в виде MLflow.
 
 Запуск и деплой
 ------------------------------------
-Самый простой вариант запустить модель - использовать подготовленный docker-образ и
-файл `compose.yaml`, для его запуска необходимо:
-1. Запустить docker-контейнер: `docker compose up --build -d`
-2. Дождаться инициализации модели
+Самый простой вариант запустить модель - использовать подготовленные docker-образы и
+файлы `mlflow_tracker.compose.yaml` и `streamlit.compose.yaml`. Первый compose файл запускает MLflow, который следит за тренировкой модели. Второй compose файл отвечает за запуск Streamlit и FastAPI, где первый отвечает за простенький фронтенд, а второй за взаимодействие с самой моделью. Для их запуска необходимо:
+1. Запустить docker-контейнер: `docker compose -f mlflow_tracker.compose.yaml up --build -d`
+2. Дождаться инициализации MLflow сервера
+3. Провести эксперименты и зарегестрировать модель в MLflow
+4. Заменить значения enviroment внутри `streamlit.compose.yaml` на ваши и запустить docker-контейнеры: `docker compose -f streamlit.compose.yaml up --build -d`
+5. Дождаться инициализации Streamlit и FastAPI
 
-Также можно запустить по-другому: нужно ввести в командную строку или терминал в `PyCharm` команду
-
-`streamlit run web.py`.
-
-А так он был загржуен на платформу `Streamlit Cloud` и по этой [ссылке](https://tiltovskii-detection-of-dangerous-weapons-in-the-han-web-lzra5c.streamlit.app/) должен работать удаленно.
+Также можно запустить по-другому: нужно заменить в файлах `mlapi.py`, `web.py` ссылки на `localhost`, ввести в командные строки или терминалы в `PyCharm` команду
+* `mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./artifacts --host 0.0.0.0 --port 5000` - запуск MLflow сервера
+* `uvicorn mlapi:app --reload` - запуск FastAPI
+* `streamlit run web.py` - запуск Streamlit.
 
 Датасет
 ------------------------------------
