@@ -4,13 +4,14 @@ import io
 from fastapi import FastAPI, File, UploadFile
 import mlflow
 from config import *
-
+import os
 
 mlflow.set_tracking_uri("http://mlflow_tracker:5000")
 classes = ['__background__'] + CLASSES
 model_name = "Detection"
 model_version = "1"
-model = mlflow.pytorch.load_model(model_uri=f"models:/{model_name}/{model_version}", map_location=torch.device('cpu'))
+model = mlflow.pytorch.load_model(model_uri=f"models:/{os.environ.get('MODEL_NAME')}/{os.environ.get('MODEL_VERSION')}",
+                                  map_location=torch.device('cpu'))
 
 app = FastAPI(swagger_ui_parameters={"syntaxHighlight": True})
 

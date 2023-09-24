@@ -7,6 +7,9 @@ services:
     container_name: api_ml
     volumes:
       - ~\.volumes\mlflow\artifacts:/Users/bende/.volumes/mlflow/artifacts
+    environment:
+      - MODEL_NAME=Detection
+      - MODEL_VERSION=1
     ports:
       - 8000:8000
     networks:
